@@ -1,0 +1,24 @@
+{
+	"schemaVersion": 1,
+	"id": "jumpscare",
+	"version": "${version}",
+	"name": "JumpScare",
+	"description": "Every second, there's a 1 in 10,000 chance you get jumpscared and a 1 in 100,000 chance you just... die.",
+	"authors": ["Hybridash"],
+	"contact": {
+		"sources": "https://github.com/Hybridash/JumpScare"
+	},
+	"license": "MIT",
+	"icon": "assets/jumpscare/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["com.hybridash.jumpscare.JumpScare"],
+		"client": ["com.hybridash.jumpscare.client.JumpScareClient"]
+	},
+	"depends": {
+		"fabricloader": ">=0.16.0",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
