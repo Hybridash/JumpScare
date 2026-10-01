@@ -9,13 +9,23 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 21
-      - uses: gradle/actions/setup-gradle@v4
-      - run: chmod +x gradlew && ./gradlew build
+      - uses: gradle/actions/setup-gradle@v5
+      - name: Build
+        run: |
+          chmod +x gradlew
+          set -o pipefail
+          ./gradlew build --stacktrace 2>&1 | tee build.log
+      - name: Report build errors
+        if: failure()
+        run: |
+          grep -nE "error:|What went wrong|Could not|> |FAILURE" build.log | head -60 > errors.txt || true
+          msg=$(sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g' errors.txt)
+          echo "::error title=Gradle build failed::$msg"
       - uses: actions/upload-artifact@v4
         with:
           name: JumpScare
