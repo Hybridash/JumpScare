@@ -23,7 +23,7 @@ jobs:
       - name: Report build errors
         if: failure()
         run: |
-          grep -nE "error:|What went wrong|Could not|> |FAILURE" build.log | head -60 > errors.txt || true
+          { grep -nE "error:|warning:" build.log | head -40; grep -A12 "What went wrong" build.log; } > errors.txt || true
           msg=$(sed ':a;N;$!ba;s/%/%25/g;s/\n/%0A/g' errors.txt)
           echo "::error title=Gradle build failed::$msg"
       - uses: actions/upload-artifact@v4
